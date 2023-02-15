@@ -30,14 +30,15 @@
             <li><a class="nav-item" href="#">contact</a></li>
           <!---search bar start--->
           <div class="search-bar">
-            <input type="text">
-            <button>search</button>
+            <input type="text" id="filter-input">
+            <button id="filter-button">search</button>
           </div>
           <!---search bar start--->
           </ul>
         </div>
         <div class="profile">
-          <img src="assets/shopping-cart.png" alt="charset" />
+          <span id="cart-icon">🛒</span>
+          <span id="cart-count"></span>
           <a href="#"><img src="assets/logo.jpg" /></a>
         </div>
       </div>
@@ -60,10 +61,10 @@
 
 
                <!---shop-card conteiner start---->
-      <div class="content" id="addtocard">
+      <div class="content" id="addtocard"></div>
                 <!---shop-card conteiner END---->
 
-          </div>
+          
         </div>
       </div>
     </div>
