@@ -1,5 +1,3 @@
-// [product] მასივი შეიცავს ობიექტებს, რომლებიც გამოჩნდება გვერდზე. თითოეულ ობიექტს აქვს ისეთი თვისებები, როგორიცაა სურათი, სათაური, ქვესათაური, ფასი, კატეგორია და რაოდენობა.
-
 const product = [
   {
     verbUrl: "assets/triple.jpg",
@@ -67,14 +65,9 @@ const product = [
   },
 ];
 
-//FilteredProducts მასივი გამოიყენება იმ პროდუქტების შესანახად, რომლებიც გაფილტრული იქნება input_ში შეყვანილი ტექსტის მიხედვით.
-//cart მასივი გამოიყენება მომხმარებლის მიერ კალათაში დამატებული ნივთების თვალყურის დევნებისთვის.
-//თავდაპირველად ის ცარიელია.
+let productArray = [...product];
 
-let filteredProducts = [];
-const cart = [];
-
-//ფუნქცია renderItem იღებს არგუმენტად ელემენტის ობიექტს და აბრუნებს HTML კოდის სტრიქონს პროდუქტის ბარათისთვის. HTML კოდი მოიცავს სურათს, პროდუქტის სათაურს, ფასს, კატეგორიას, ქვესათაურს, რაოდენობას და ღილაკს "კალათაში დამატება".
+let cart = [];
 
 const renderItem = (item) => {
   return `<div class="card">
@@ -92,48 +85,52 @@ const renderItem = (item) => {
           </div>`;
 };
 
-//cardConteiner ცვლადი დაყენებულია DOM ელემენტზე "addtocard"-ის ID-ით. "cardConteiner" ელემენტის innerHTML დაყენებულია პროდუქტის მასივზე გადატანის შედეგზე და მასივის თითოეულ ელემენტზე renderItem ფუნქციის გამოყენების შედეგზე. ეს გამოიმუშავებს პროდუქტის ბარათების სერიას და ჩასვამს მათ "cardConteiner" ელემენტში.
-
 const cardConteiner = document.getElementById("addtocard");
 
-cardConteiner.innerHTML = product.map((verb) => renderItem(verb));
-
-//button წამოვიღე.
-
 const buttonFilter = document.querySelectorAll(".btn");
-const cardButton = document.querySelectorAll(".cart-button");
+let addToCardArray = [...buttonFilter];
 
 const cartLength = document.getElementById("cart-count");
 
-let addToCardArray = [...buttonFilter];
+cardConteiner.innerHTML = product.map((verb) => renderItem(verb));
+
+const cardButton = document.querySelectorAll(".cart-button");
 const cardButtonArray = [...cardButton];
 
-cardButtonArray.forEach((cardConteiner, idx) => {
-  cardConteiner.addEventListener("click", () => {
-    cart.push(product[idx].category);
-    cartLength.innerHTML = cart.length;
+const someFunction = () => {
+  const cardButton = document.querySelectorAll(".cart-button");
+  const cardButtonArray = [...cardButton];
 
-    document.cardConteiner.innerHTML = product.filter(
-      (verb) => verb.category === textContent
-    );
-
-    card.innerHTML = filtered.map((item) => someSecond(item));
+  cardButtonArray.forEach((card, idx) => {
+    card.addEventListener("click", () => {
+      cart.push(cardButtonArray[idx].category);
+      cartLength.innerHTML = cart.length;
+    });
   });
-});
+};
 
-addToCardArray.forEach((btn) => {
+someFunction();
+cartLength.innerHTML = cart.length;
+
+buttonFilter.forEach((btn) => {
   btn.addEventListener("click", () => {
-    console.log(btn.textContent);
     if (btn.textContent === "all") {
-      cardConteiner.innerHTML = product.map((item) => renderItem(item));
+      productArray = [...product];
+      cardConteiner.innerHTML = productArray.map((verb) => renderItem(verb));
+      someFunction();
       return;
     }
 
     const filtered = product.filter(
-      (verb) => verb.category === btn.textContent
+      (verb) => verb.category === (btn.textContent || searchInput.value)
     );
 
-    cardConteiner.innerHTML = filtered.map((item) => renderItem(item));
+    productArray = [...filtered];
+
+    const filteredArray = filtered.map((item) => renderItem(item));
+    cardConteiner.innerHTML = filteredArray;
+
+    someFunction();
   });
 });
 
